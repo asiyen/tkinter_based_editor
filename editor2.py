@@ -2,7 +2,9 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
-
+import os, sys
+import win32.win32print as wp
+import win32.win32api as wa
 
 class TextEditor:
 
@@ -22,7 +24,7 @@ class TextEditor:
 
     self.statusbar = Label(self.root,textvariable=self.status,font=("times new roman",15),bd=2,relief=GROOVE)
     self.statusbar.pack(side=BOTTOM,fill=BOTH)
-    self.status.set("Wontonpad")
+    self.status.set("Untitled")
     
     self.menubar = Menu(self.root,font=("times new roman",15,"bold"),activebackground="skyblue")
     # Configuring menubar on root window
@@ -34,6 +36,7 @@ class TextEditor:
     self.filemenu.add_command(label="Open",accelerator="Ctrl+O",command=self.openfile)
     self.filemenu.add_command(label="Save",accelerator="Ctrl+S",command=self.savefile)
     self.filemenu.add_command(label="Save As",accelerator="Ctrl+A",command=self.saveasfile)
+    self.filemenu.add_command(label="Print", accelerator="Ctrl+P",command=self.printfile)
     self.filemenu.add_separator()
     self.filemenu.add_command(label="Exit",accelerator="Ctrl+E",command=self.exit)
     self.menubar.add_cascade(label="File", menu=self.filemenu)
@@ -116,6 +119,14 @@ class TextEditor:
       self.status.set("Saved Successfully")
     except Exception as e:
       messagebox.showerror("Exception",e)
+  
+  # Defining the document print function
+  def printfile(self, *args):
+    # printer_name = wp.GetDefaultPrinter
+    # status_bar.config(text=printer_name)
+    file_print = filedialog.askopenfilename(title = "Select file",filetypes = (("All Files","*.*"),("Text Files","*.txt"),("Python Files","*.py")))
+    if file_print:
+      wa.ShellExecute(0, "print", file_print, None, ".", 0)
 
   # Defining Exit Funtion
   def exit(self,*args):
@@ -171,7 +182,7 @@ class TextEditor:
     self.txtarea.bind("<Control-c>",self.copy)
     self.txtarea.bind("<Control-v>",self.paste)
     self.txtarea.bind("<Control-z>",self.undo)
-    #im gae
+    #if the world of mc is infinite than how can the sun revolve around it
 
 root = Tk()
 TextEditor(root)
