@@ -122,8 +122,6 @@ class TextEditor:
   
   # Defining the document print function
   def printfile(self, *args):
-    # printer_name = wp.GetDefaultPrinter
-    # status_bar.config(text=printer_name)
     file_print = filedialog.askopenfilename(title = "Select file",filetypes = (("All Files","*.*"),("Text Files","*.txt"),("Python Files","*.py")))
     if file_print:
       wa.ShellExecute(0, "print", file_print, None, ".", 0)
